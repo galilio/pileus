@@ -3,7 +3,7 @@ import unittest
 from nameko.rpc import rpc
 from nameko.testing.services import worker_factory
 from functools import wraps
-from nameko_redis import Redis
+from pileus import Redis
 
 class TestService(object):
     name = 'test_service'
@@ -14,7 +14,7 @@ class TestService(object):
     @cache()
     def hello(self):
         print('fetch from func calls.')
-        return 'test'
+        return ['test', 'test2']
 
 class TestCache(unittest.TestCase):
     def test_cache(self):

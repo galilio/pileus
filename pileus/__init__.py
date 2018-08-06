@@ -6,6 +6,7 @@ from bottle import HTTPError
 from .async import async
 from .rpc import rpc, proxy
 from .cache import cache
+from .nameko_redis import Redis
 
 app = bottle.default_app()
 
@@ -15,4 +16,4 @@ request_method = ['get', 'post', 'delete', 'put', 'response', 'abort', 'request'
 def bp():
     return Bottle()
 
-__all__ = ['async', 'route', 'app', 'run', 'bp', 'rpc', 'proxy', 'cache'] + request_method
+__all__ = ['async', 'route', 'app', 'run', 'bp', 'rpc', 'proxy', 'cache', 'Redis'] + request_method
