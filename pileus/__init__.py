@@ -4,7 +4,7 @@ from bottle import route, get, post, delete, put, response, abort, request, Bott
 from bottle import run
 from bottle import HTTPError
 from .async import async
-from .rpc import rpc, proxy
+from .rpc import rpc, proxy, DynamicRpcProxy, ServiceNotRegisterException
 from .cache import cache
 from .nameko_redis import Redis
 
@@ -16,4 +16,8 @@ request_method = ['get', 'post', 'delete', 'put', 'response', 'abort', 'request'
 def bp():
     return Bottle()
 
-__all__ = ['async', 'route', 'app', 'run', 'bp', 'rpc', 'proxy', 'cache', 'Redis'] + request_method
+
+
+__all__ = ['async', 'route', 'app', 'run', 'bp', 'cache', 'Redis']
+__all__ += request_method
+__all__ += ['rpc', 'proxy', 'DynamicRpcProxy', 'ServiceNotRegisterException']
