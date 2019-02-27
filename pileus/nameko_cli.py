@@ -1,7 +1,6 @@
 from nameko.runners import ServiceRunner
-
-from bayes.adambot.svc.tag import TagService
-from bayes.adambot.svc.report_mgr import ReportManager
+import eventlet
+eventlet.monkey_patch()  # noqa (code before rest of imports)
 
 import logging
 import re, os
@@ -67,3 +66,25 @@ def run(config, *svcs):
     for svc in svcs:
         runner.add_service(svc)
     runner.start()
+
+    runnlet = eventlet.spawn(service_runner.wait)
+
+    while True:
+        try:
+            runnlet.wait()
+        except OSError as exc:
+            if exc.errno == errno.EINTR:
+                # this is the OSError(4) caused by the signalhandler.
+                # ignore and go back to waiting on the runner
+                continue
+            raise
+        except KeyboardInterrupt:
+            print()  # looks nicer with the ^C e.g. bash prints in the terminal
+            try:
+                service_runner.stop()
+            except KeyboardInterrupt:
+                print()  # as above
+                service_runner.kill()
+        else:
+            # runner.wait completed
+            break
