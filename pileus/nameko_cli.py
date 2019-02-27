@@ -58,6 +58,7 @@ def setup_yaml_parser():
     yaml.add_implicit_resolver('!env_var', IMPLICIT_ENV_VAR_MATCHER)
 
 def run(config, *svcs):
+    from sys import argv
     setup_yaml_parser()
     config = yaml.load(open(argv[1]))
     logging.info(config)
