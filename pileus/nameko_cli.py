@@ -67,7 +67,7 @@ def run(config, *svcs):
         runner.add_service(svc)
     runner.start()
 
-    runnlet = eventlet.spawn(service_runner.wait)
+    runnlet = eventlet.spawn(runner.wait)
 
     while True:
         try:
@@ -81,10 +81,10 @@ def run(config, *svcs):
         except KeyboardInterrupt:
             print()  # looks nicer with the ^C e.g. bash prints in the terminal
             try:
-                service_runner.stop()
+                runner.stop()
             except KeyboardInterrupt:
                 print()  # as above
-                service_runner.kill()
+                runner.kill()
         else:
             # runner.wait completed
             break
