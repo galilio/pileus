@@ -61,5 +61,5 @@ def paginate(query, page = 1, per_page = 20, error_out = False):
     if page == 1 and len(items) < per_page:
         total = len(items)
     else:
-        total = query.object_by(None).count()
+        total = query.order_by(None).count()
     return Paginate(query, page, per_page, total, items)
