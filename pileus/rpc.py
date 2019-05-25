@@ -4,7 +4,7 @@ from functools import wraps
 from nameko.standalone.rpc import ClusterRpcProxy
 from nameko.extensions import DependencyProvider
 from nameko.rpc import ReplyListener, ServiceProxy
-from nameko.utils import SpawningSet
+from nameko.utils.concurrency import SpawningSet
 
 def local_property():
     ls = threading.local()
